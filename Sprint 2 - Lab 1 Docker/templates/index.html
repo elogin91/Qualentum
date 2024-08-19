@@ -1,0 +1,85 @@
+<style>
+    .form-group {
+        display: flex;
+    }
+    /* input para añadir una nueva tarea, estilo tipo bootstrap */
+    .form-control {
+        display: block;
+        padding: .375rem .75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    }
+    /* boton para añadir una nueva tarea, estilo tipo bootstrap */
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        color: #fff;
+        padding: 10px;
+        margin: 0px 10px;
+    }
+    /* tabla estilo bootstrap */
+    .table {
+        width: 100%;
+        margin-bottom: 1rem;
+        color: #212529;
+        background-color: transparent;
+        border-collapse: collapse;
+    }
+    /* cabecera de la tabla estilo bootstrap */
+    .table thead th {
+        vertical-align: bottom;
+        border-bottom: 2px solid #dee2e6;
+    }
+    /* celda de la tabla estilo bootstrap */
+    .table td, .table th {
+        padding: .75rem;
+        vertical-align: top;
+        border-top: 1px solid #dee2e6;
+    }
+
+    /* botón eliminar estilo bootstrap */
+    .btn-danger {
+        color: #fff;
+        background-color: #dc3545;
+        border-color: #dc3545;
+        padding: 10px;
+        float: right;
+    }
+
+</style>
+<!-- Formulario para añadir una nueva tarea -->
+<form action="/add" method="POST" class="form-inline">
+    <div class="form-group">
+        <input type="text" name="title" placeholder="Título" class="form-control">
+        <button type="submit" class="btn btn-primary">Añadir tarea</button>
+    </div>
+</form>
+<hr>
+
+<!-- Table con un listado de tareas-->
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Título</th>
+        <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- recorremos el array de tasks-->
+    {%for i in range(0, tasks|length)%}
+    <tr>
+        <td>{{tasks[i].ID}}</td>
+        <td>{{tasks[i].name}}</td>
+        <td>
+            <a href="/delete/{{tasks[i].ID}}" class="btn btn-danger">Eliminar</a>
+        </td>
+    </tr>
+    {%endfor%}
+    </tbody>
+</table>

@@ -1,0 +1,31 @@
+services:
+  web:
+    build: .
+    container_name: flask_app
+    environment:
+      - MYSQL_HOST=mysql
+      - MYSQL_DATABASE=todo_app
+      - MYSQL_ROOT_PASSWORD=password
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+    networks:
+      - todo_lan
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_db
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: todo_app
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - todo_lan
+
+networks:
+  todo_lan:
+
+volumes:
+  db_data:
