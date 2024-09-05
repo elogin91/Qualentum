@@ -1,0 +1,19 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_service
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: cv
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./SQL/:/docker-entrypoint-initdb.d/
+
+  mongodb:
+    image: mongo:6.0
+    container_name: mongodb_service
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./NOSQL/:/docker-entrypoint-initdb.d/

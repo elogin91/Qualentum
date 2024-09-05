@@ -1,0 +1,20 @@
+[
+  {
+    "institucion": "Qualentum",
+    "nombre": "Bootcamp de Desarrollo Backend",
+    "promocion": "2023",
+    "competencias": [
+      "Desarrollo avanzado en Python y Java",
+      "Diseño y administración de bases de datos con MySQL y PostgreSQL"
+    ]
+  },
+  {
+    "institución": "CIFP Juan De Herrera",
+    "nombre": "Título en Desarrollo de Aplicaciones Web (DAW)",
+    "promocion": "2022",
+    "competencias": [
+      "Lenguajes de marcas y sistemas de gestión de información",
+      "Sistemas informáticos"
+    ]
+  }
+]

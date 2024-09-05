@@ -1,0 +1,66 @@
+[{
+  "_id": {
+    "$oid": "6534f55495f7d319fc4bd986"
+  },
+  "nombre": "Luis",
+  "apellidos": "Hernández",
+  "avatar": "",
+  "skills": [
+    {
+      "_id": "php",
+      "nombre": "PHP",
+      "nivel": "90"
+    },
+    {
+      "_id": "docker",
+      "nombre": "Docker",
+      "nivel": "85"
+    }
+  ],
+  "idiomas": [
+    {
+      "_id": "es",
+      "nombre": "Español"
+    }
+  ],
+  "educacion": [
+    {
+      "_id": "QLM",
+      "institucion": "Qualentum",
+      "nombre": "Bootcamp de Desarrollo Backend",
+      "promocion": "2023",
+      "competencias": [
+        "Desarrollo avanzado en Python y Java",
+        "Diseño y administración de bases de datos con MySQL y PostgreSQL"
+      ]
+    },
+    {
+      "_id": "JH-DAW",
+      "institución": "CIFP Juan De Herrera",
+      "nombre": "Título en Desarrollo de Aplicaciones Web (DAW)",
+      "promocion": "2022",
+      "competencias": [
+        "Lenguajes de marcas y sistemas de gestión de información",
+        "Sistemas informáticos"
+      ]
+    }
+  ],
+  "recomendaciones": [
+    {
+      "_id": "EL-LH",
+      "nombre_recomendador": "Enrique López",
+      "puesto_recomendador": "Profesor de DAW",
+      "foto_recomendador": "",
+      "comentario": "Luis Hernández fue uno de los estudiantes más destacados...",
+      "fecha": "2022-09-01"
+    },
+    {
+      "_id": "AM-LH",
+      "nombre_recomendador": "Ana Martínez",
+      "puesto_recomendador": "Instructora en Qualentum",
+      "foto_recomendador": "",
+      "comentario": "Luis destacó durante nuestro bootcamp de desarrollo...",
+      "fecha": "2023-07-15"
+    }
+  ]
+}]
