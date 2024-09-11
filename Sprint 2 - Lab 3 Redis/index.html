@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tablón de Notificaciones</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        #container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        #mensajes {
+            margin-top: 20px;
+        }
+        .mensaje {
+            background-color: #e0e0e0;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            margin-top: 20px;
+        }
+        input, button {
+            padding: 10px;
+            margin-top: 10px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <h1>Tablón de Notificaciones</h1>
+
+    <!-- Selección de usuario -->
+    <div id="seleccionUsuario">
+        <label for="tipoUsuario">Selecciona tu tipo de usuario:</label>
+        <select id="tipoUsuario">
+            <option value="profesor">Profesor</option>
+            <option value="alumno">Alumno1: Pepe</option>
+            <option value="alumno">Alumno2: María</option>
+        </select>
+        <button id="btnEntrar">Entrar</button>
+    </div>
+
+    <!-- Mensajes que verán los alumnos -->
+    <div id="mensajes"><h2>Leer mensajes del Profesor</h2></div>
+
+    <!-- Formulario solo visible para el profesor -->
+    <div id="formularioProfesor" style="display: none;">
+        <h2>Enviar mensaje a los Alumnos</h2>
+        <form id="formMensaje">
+            <input type="text" id="inputMensaje" placeholder="Escribe un mensaje..." required />
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    const socket = io();
+    let firstConnection = true;
+    // Capturar los elementos del DOM
+    const seleccionUsuarioDiv = document.getElementById('seleccionUsuario');
+    const formMensaje = document.getElementById('formMensaje');
+    const inputMensaje = document.getElementById('inputMensaje');
+    const mensajesDiv = document.getElementById('mensajes');
+    const tipoUsuario = document.getElementById('tipoUsuario');
+    const btnEntrar = document.getElementById('btnEntrar');
+    const formularioProfesor = document.getElementById('formularioProfesor');
+
+    // Al hacer clic en "Entrar", se elige el tipo de usuario
+    btnEntrar.addEventListener('click', () => {
+        usuario = tipoUsuario.value;
+        if(usuario == 'profesor' || usuario == 'alumno'){
+            socket.emit('add user', usuario);
+            seleccionUsuarioDiv.style.display = 'none'; // Ocultar selección de usuario
+            if (usuario === 'profesor') {
+                formularioProfesor.style.display = 'block'; // Mostrar formulario solo para el profesor
+            }
+        }
+    });
+
+    // Enviar mensaje
+    formMensaje.addEventListener('submit', (e) => {
+        e.preventDefault();
+            const mensaje = inputMensaje.value;
+            socket.emit('mensajeProfesor', mensaje);
+            inputMensaje.value = '';
+    });
+
+    // Mostrar los mensajes históricos
+    socket.on('mensajesHistoricos', (mensajes) => {
+        if(firstConnection) {
+            console.log('Mensajes históricos recibidos:', mensajes); // Log para verificar los mensajes recibidos
+            mensajes.forEach((mensaje) => {
+                mostrarMensaje(mensaje);
+            });
+            firstConnection = false;
+        }
+    });
+
+    // Escuchar los mensajes en tiempo real
+    socket.on('notificacion', (mensaje) => {
+        mostrarMensaje(mensaje);
+    });
+
+    // Función para mostrar un mensaje en el DOM
+    function mostrarMensaje(mensaje) {
+        const nuevoMensaje = document.createElement('div');
+        nuevoMensaje.className = 'mensaje';
+        nuevoMensaje.textContent = mensaje;
+        mensajesDiv.appendChild(nuevoMensaje);
+    }
+</script>
+</body>
+</html>

@@ -93,4 +93,12 @@ Instrucciones específicas del laboratorio 5.
    ```
 
 --- 
+#### - Laboratorio 2
 
+1. Abrimos una terminal.
+2. Nos situamos en la carpeta correspondiente al ejercicio.
+3. Ejecutamos los siguientes comandos:
+
+   ```bash
+   docker-compose up
+   ```
