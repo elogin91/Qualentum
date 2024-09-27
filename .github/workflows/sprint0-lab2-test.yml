@@ -22,4 +22,4 @@ jobs:
 
       - name: Run tests
         run: |
-          pytest "Sprint 0 - Lab 2 Python/"
+          pytest "Sprint0/Lab2_Python/"
