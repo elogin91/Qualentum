@@ -30,6 +30,7 @@ $RECYCLE.BIN/
 # IntelliJ
 *.iml
 *.idea/*
+/out
 
 # Node
 # Dependency directories
