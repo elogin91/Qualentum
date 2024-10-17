@@ -70,7 +70,7 @@ public class CarsController {
 
             return ResponseEntity.ok(dtoFromService(carUpdated));
         } catch (Exception e) {
-            log.error("Something wrong getting a car", e);
+            log.error("Something wrong updating a car", e);
             return ResponseEntity.internalServerError().body("Some error has occurred, sorry");
         }
     }

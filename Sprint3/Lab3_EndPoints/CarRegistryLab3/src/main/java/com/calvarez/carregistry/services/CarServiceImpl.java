@@ -6,9 +6,6 @@ import com.calvarez.carregistry.services.model.Car;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
-
 @Service
 public class CarServiceImpl implements CarService{
     @Autowired
@@ -19,24 +16,47 @@ public class CarServiceImpl implements CarService{
          CarEntity carEntity = carRepository.get(id);
          Car car = null;
         if(carEntity != null){
-           car = new Car(
-                    carEntity.getId(),
-                    carEntity.getBrand(),
-                    carEntity.getModel(),
-                    carEntity.getMilleage(),
-                    carEntity.getPrice(),
-                    carEntity.getYear(),
-                    carEntity.getDescription(),
-                    carEntity.getColour(),
-                    carEntity.getFuelType(),
-                    carEntity.getNumDoors()
-            );
+            car = serviceFromEntity(carEntity);
         }
         return car;
     }
 
     @Override
     public Car update(Car car) {
-        return null;
+        CarEntity carEntity = new CarEntity(
+                car.getId(),
+                car.getBrand(),
+                car.getModel(),
+                car.getMilleage(),
+                car.getPrice(),
+                car.getYear(),
+                car.getDescription(),
+                car.getColour(),
+                car.getFuelType(),
+                car.getNumDoors()
+        );
+        CarEntity carEntityUpdated = carRepository.update(carEntity);
+        Car carUpdated = null;
+        if(carEntityUpdated !=null) {
+            carUpdated = serviceFromEntity(carEntityUpdated);
+        }
+        return carUpdated;
+    }
+
+    private static Car serviceFromEntity(CarEntity carEntity) {
+        Car car;
+        car = new Car(
+                carEntity.getId(),
+                carEntity.getBrand(),
+                carEntity.getModel(),
+                carEntity.getMilleage(),
+                carEntity.getPrice(),
+                carEntity.getYear(),
+                carEntity.getDescription(),
+                carEntity.getColour(),
+                carEntity.getFuelType(),
+                carEntity.getNumDoors()
+        );
+        return car;
     }
 }

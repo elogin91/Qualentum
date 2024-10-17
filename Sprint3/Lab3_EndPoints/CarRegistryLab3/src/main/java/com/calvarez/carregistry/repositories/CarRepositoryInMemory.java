@@ -24,4 +24,13 @@ public class CarRepositoryInMemory implements CarRepository {
     public void add(CarEntity carEntity) {
 
     }
+
+    @Override
+    public CarEntity update(CarEntity car) {
+        if(cars.get(car.getId()) == null) {
+           return null;
+        }
+        cars.put(car.getId(), car);
+        return car;
+    }
 }
