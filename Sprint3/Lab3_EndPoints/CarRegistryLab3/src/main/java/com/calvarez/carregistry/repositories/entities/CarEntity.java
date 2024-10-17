@@ -1,10 +1,15 @@
-package com.calvarez.carregistry.controllers.dtos;
+package com.calvarez.carregistry.repositories.entities;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 
 @Data
-public class CarRequest {
-
+@AllArgsConstructor
+@NoArgsConstructor
+public class CarEntity {
+    private Integer id;
     private String brand;
     private String model;
     private Integer milleage;
@@ -14,4 +19,5 @@ public class CarRequest {
     private String colour;
     private String fuelType;
     private Integer numDoors;
+
 }

@@ -1,11 +1,13 @@
-package com.calvarez.carregistry.repositories;
+package com.calvarez.carregistry.services.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class Car {
     private Integer id;
     private String brand;
@@ -17,5 +19,4 @@ public class Car {
     private String colour;
     private String fuelType;
     private Integer numDoors;
-
 }
