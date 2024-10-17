@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.calvarez</groupId>
-	<artifactId>carregistry</artifactId>
+	<artifactId>carregistrylab3</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>CarRegistry</name>
+	<name>CarRegistryLab3</name>
 	<description>Car registry for enterprise project done with Spring Boot</description>
 	<url/>
 	<licenses>
