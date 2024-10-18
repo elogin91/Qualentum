@@ -43,6 +43,16 @@ public class CarServiceImpl implements CarService{
         return carUpdated;
     }
 
+    @Override
+    public Car delete(Integer id) {
+        CarEntity carEntity = carRepository.delete(id);
+        Car car = null;
+        if(carEntity != null){
+            car = serviceFromEntity(carEntity);
+        }
+        return car;
+    }
+
     private static Car serviceFromEntity(CarEntity carEntity) {
         Car car;
         car = new Car(

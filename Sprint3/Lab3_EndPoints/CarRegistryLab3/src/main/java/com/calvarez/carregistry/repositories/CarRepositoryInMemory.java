@@ -33,4 +33,9 @@ public class CarRepositoryInMemory implements CarRepository {
         cars.put(car.getId(), car);
         return car;
     }
+
+    @Override
+    public CarEntity delete(Integer id) {
+        return cars.remove(id);
+    }
 }

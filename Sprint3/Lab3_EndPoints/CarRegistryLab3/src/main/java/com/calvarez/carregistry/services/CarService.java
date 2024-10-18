@@ -5,4 +5,5 @@ import com.calvarez.carregistry.services.model.Car;
 public interface CarService {
     Car get(int id);
     Car update(Car car);
+    Car delete(Integer id);
 }
