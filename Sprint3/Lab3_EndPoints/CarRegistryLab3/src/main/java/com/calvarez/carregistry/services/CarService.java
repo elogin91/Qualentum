@@ -6,4 +6,5 @@ public interface CarService {
     Car get(int id);
     Car update(Car car);
     Car delete(Integer id);
+    Car add(Car car);
 }

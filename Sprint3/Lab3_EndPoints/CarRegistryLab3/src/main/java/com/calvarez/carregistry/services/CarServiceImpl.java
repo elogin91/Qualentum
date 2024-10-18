@@ -23,18 +23,7 @@ public class CarServiceImpl implements CarService{
 
     @Override
     public Car update(Car car) {
-        CarEntity carEntity = new CarEntity(
-                car.getId(),
-                car.getBrand(),
-                car.getModel(),
-                car.getMilleage(),
-                car.getPrice(),
-                car.getYear(),
-                car.getDescription(),
-                car.getColour(),
-                car.getFuelType(),
-                car.getNumDoors()
-        );
+        CarEntity carEntity = entityFromService(car);
         CarEntity carEntityUpdated = carRepository.update(carEntity);
         Car carUpdated = null;
         if(carEntityUpdated !=null) {
@@ -53,6 +42,13 @@ public class CarServiceImpl implements CarService{
         return car;
     }
 
+    @Override
+    public Car add(Car car) {
+        CarEntity carToDelete = entityFromService(car);
+        CarEntity carEntity = carRepository.add(carToDelete);
+        return serviceFromEntity(carEntity);
+    }
+
     private static Car serviceFromEntity(CarEntity carEntity) {
         Car car;
         car = new Car(
@@ -68,5 +64,21 @@ public class CarServiceImpl implements CarService{
                 carEntity.getNumDoors()
         );
         return car;
+    }
+
+    private static CarEntity entityFromService(Car car) {
+        CarEntity carEntity = new CarEntity(
+                car.getId(),
+                car.getBrand(),
+                car.getModel(),
+                car.getMilleage(),
+                car.getPrice(),
+                car.getYear(),
+                car.getDescription(),
+                car.getColour(),
+                car.getFuelType(),
+                car.getNumDoors()
+        );
+        return carEntity;
     }
 }

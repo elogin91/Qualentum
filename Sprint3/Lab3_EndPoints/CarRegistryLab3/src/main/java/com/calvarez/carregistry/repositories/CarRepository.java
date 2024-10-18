@@ -4,7 +4,7 @@ import com.calvarez.carregistry.repositories.entities.CarEntity;
 
 public interface CarRepository {
     CarEntity get(int id);
-    void add(CarEntity carEntity);
+    CarEntity add(CarEntity carEntity);
     CarEntity update(CarEntity car);
     CarEntity delete(Integer id);
 }

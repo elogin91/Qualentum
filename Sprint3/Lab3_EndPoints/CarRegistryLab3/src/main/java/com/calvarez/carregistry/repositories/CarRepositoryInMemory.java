@@ -8,10 +8,11 @@ import java.util.Map;
 
 @Service
 public class CarRepositoryInMemory implements CarRepository {
-    Map<Integer, CarEntity> cars = new HashMap<>();
+    private Map<Integer, CarEntity> cars = new HashMap<>();
+    private Integer maxId = 0;
 
     public CarRepositoryInMemory() {
-        cars.put(1, new CarEntity(1, "Ford", "Fiesta", 17236, 1500.89, 2015, "It´s notably used", "Blue", "Gasoil", 5));
+        this.add(new CarEntity(0, "Ford", "Fiesta", 17236, 1500.89, 2015, "It´s notably used", "Blue", "Gasoil", 5));
     }
 
     @Override
@@ -21,14 +22,16 @@ public class CarRepositoryInMemory implements CarRepository {
     }
 
     @Override
-    public void add(CarEntity carEntity) {
-
+    public CarEntity add(CarEntity carEntity) {
+        carEntity.setId(getNextId());
+        cars.put(carEntity.getId(), carEntity);
+        return carEntity;
     }
 
     @Override
     public CarEntity update(CarEntity car) {
-        if(cars.get(car.getId()) == null) {
-           return null;
+        if (cars.get(car.getId()) == null) {
+            return null;
         }
         cars.put(car.getId(), car);
         return car;
@@ -37,5 +40,9 @@ public class CarRepositoryInMemory implements CarRepository {
     @Override
     public CarEntity delete(Integer id) {
         return cars.remove(id);
+    }
+
+    private Integer getNextId() {
+        return ++maxId;
     }
 }

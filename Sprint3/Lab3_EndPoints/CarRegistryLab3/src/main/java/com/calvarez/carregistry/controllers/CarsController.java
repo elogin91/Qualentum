@@ -46,18 +46,7 @@ public class CarsController {
     @PutMapping("/{id}")
     public ResponseEntity<?> modifyCar(@PathVariable Integer id, @RequestBody CarRequest carRequest){
         try{
-            Car car = new Car(
-                    id,
-                    carRequest.getBrand(),
-                    carRequest.getModel(),
-                    carRequest.getMilleage(),
-                    carRequest.getPrice(),
-                    carRequest.getYear(),
-                    carRequest.getDescription(),
-                    carRequest.getColour(),
-                    carRequest.getFuelType(),
-                    carRequest.getNumDoors()
-            );
+            Car car = serviceFromDto(id, carRequest);
             Car carUpdated = carService.update(car);
             if (carUpdated == null) {
                 return ResponseEntity.notFound().build();
@@ -69,6 +58,8 @@ public class CarsController {
             return ResponseEntity.internalServerError().body("Some error has occurred, sorry");
         }
     }
+
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteCar(@PathVariable Integer id){
@@ -85,16 +76,17 @@ public class CarsController {
             return ResponseEntity.internalServerError().body("Some error has occurred, sorry");
         }
     }
-/*
+
     @PostMapping("/")
-    public ResponseEntity<?> addingCar(@RequestBody CarRequest carRequest){
-        boolean isCarAdded = true;
-        if(isCarAdded){
-            return ResponseEntity.ok("Added new car: " + carRequest);
+    public ResponseEntity<?> addCar(@RequestBody CarRequest carRequest){
+        try {
+            Car car = serviceFromDto(null,carRequest);
+            Car carAdded = carService.add(car);
+            return ResponseEntity.ok("Added new car: " + carAdded);
+        } catch (Exception e) {
+            return  ResponseEntity.status(500).build();
         }
-        return  ResponseEntity.status(500).build();
     }
- */
 
     private CarResponse dtoFromService(Car car) {
         return new CarResponse(
@@ -108,5 +100,21 @@ public class CarsController {
                 car.getFuelType(),
                 car.getNumDoors()
         );
+    }
+
+    private static Car serviceFromDto(Integer id, CarRequest carRequest) {
+        Car car = new Car(
+                id,
+                carRequest.getBrand(),
+                carRequest.getModel(),
+                carRequest.getMilleage(),
+                carRequest.getPrice(),
+                carRequest.getYear(),
+                carRequest.getDescription(),
+                carRequest.getColour(),
+                carRequest.getFuelType(),
+                carRequest.getNumDoors()
+        );
+        return car;
     }
 }
