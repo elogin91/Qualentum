@@ -15,8 +15,9 @@ public class CarEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name = "brand_id")
-    private Integer brand;
+    @ManyToOne
+    @JoinColumn(name = "brand_id")
+    private BrandEntity brand;
     private String model;
     private Integer milleage;
     private Double price;

@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Car {
     private Integer id;
-    private Integer brand;
+    private Brand brand;
     private String model;
     private Integer milleage;
     private Double price;

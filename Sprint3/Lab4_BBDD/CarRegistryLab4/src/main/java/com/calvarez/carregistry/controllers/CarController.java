@@ -2,9 +2,11 @@ package com.calvarez.carregistry.controllers;
 
 import com.calvarez.carregistry.controllers.dtos.CarRequest;
 import com.calvarez.carregistry.controllers.dtos.CarResponse;
+import com.calvarez.carregistry.services.BrandService;
 import com.calvarez.carregistry.services.CarService;
 import com.calvarez.carregistry.services.Greetings;
 import com.calvarez.carregistry.services.model.Car;
+import com.calvarez.carregistry.services.model.CarInput;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,13 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Slf4j
 @RequestMapping("/car")
-public class CarController {
-
-    @Autowired
-    private CarService carService;
-
-    @Autowired
-    private Greetings greetings;
+public class CarController extends Controller{
 
     @GetMapping("/")
     public ResponseEntity<?> getGreetings() {
@@ -48,7 +44,7 @@ public class CarController {
     @PutMapping("/{id}")
     public ResponseEntity<?> modifyCar(@PathVariable Integer id, @RequestBody CarRequest carRequest) {
         try {
-            Car car = serviceFromDto(id, carRequest);
+            CarInput car = serviceFromDto(id, carRequest);
             Car carUpdated = carService.update(car);
             if (carUpdated == null) {
                 return ResponseEntity.notFound().build();
@@ -80,44 +76,14 @@ public class CarController {
     @PostMapping("/")
     public ResponseEntity<?> addCar(@RequestBody CarRequest carRequest) {
         try {
-            Car car = serviceFromDto(null, carRequest);
+            CarInput car = serviceFromDto(null, carRequest);
             Car carAdded = carService.add(car);
-/*            if(carAdded == null){
-                return ResponseEntity.badRequest().body("The brand doesn't exist.");
-            }*/
             return ResponseEntity.ok(dtoFromService(carAdded));
+        } catch (CarService.BrandNotFoundException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.status(500).build();
+            log.error("Something wrong adding a car", e);
+            return ResponseEntity.internalServerError().body(e.getMessage());
         }
-    }
-
-    private CarResponse dtoFromService(Car car) {
-        return new CarResponse(
-                car.getBrand(),
-                car.getModel(),
-                car.getMilleage(),
-                car.getPrice(),
-                car.getYear(),
-                car.getDescription(),
-                car.getColour(),
-                car.getFuelType(),
-                car.getNumDoors()
-        );
-    }
-
-    private static Car serviceFromDto(Integer id, CarRequest carRequest) {
-        Car car = new Car(
-                id,
-                carRequest.getBrand(),
-                carRequest.getModel(),
-                carRequest.getMilleage(),
-                carRequest.getPrice(),
-                carRequest.getYear(),
-                carRequest.getDescription(),
-                carRequest.getColour(),
-                carRequest.getFuelType(),
-                carRequest.getNumDoors()
-        );
-        return car;
     }
 }

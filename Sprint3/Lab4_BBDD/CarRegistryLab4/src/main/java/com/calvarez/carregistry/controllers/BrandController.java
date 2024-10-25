@@ -12,10 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Slf4j
 @RequestMapping("/brand")
-public class BrandController {
-
-    @Autowired
-    private BrandService brandService;
+public class BrandController extends Controller{
 
     @GetMapping("/")
     public ResponseEntity<?> getAllBrands() {
@@ -79,23 +76,4 @@ public class BrandController {
             return ResponseEntity.status(500).build();
         }
     }
-
-    private BrandResponse dtoFromService(Brand brand) {
-        return new BrandResponse(
-                brand.getName(),
-                brand.getWarranty(),
-                brand.getCountry()
-        );
-    }
-
-    private static Brand serviceFromDto(Integer id, BrandRequest brandRequest) {
-        return new Brand(
-                id,
-                brandRequest.getName(),
-                brandRequest.getWarranty(),
-                brandRequest.getCountry()
-
-        );
-    }
-
 }

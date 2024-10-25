@@ -14,30 +14,33 @@ public class BrandServiceImpl implements BrandService {
     @Autowired
     private BrandRepository brandRepository;
 
+    @Autowired
+    private MapperService mapperService;
+
     @Override
     public Brand get(Integer id) {
-        return brandRepository.findById(id).map(BrandServiceImpl::serviceFromEntity).orElse(null);
+        return brandRepository.findById(id).map(mapperService::serviceFromEntity).orElse(null);
     }
 
     @Override
     public List<Brand> getAll() {
-        return brandRepository.findAll().stream().map(BrandServiceImpl::serviceFromEntity).toList();
+        return brandRepository.findAll().stream().map(mapperService::serviceFromEntity).toList();
     }
 
     @Override
     public Brand update(Brand brand) {
-        BrandEntity brandEntity = entityFromService(brand);
+        BrandEntity brandEntity = mapperService.entityFromService(brand);
         Brand brandUpdated = null;
         if (brandRepository.findById(brandEntity.getId()).isPresent()) {
             BrandEntity brandEntityUpdated = brandRepository.save(brandEntity);
-            brandUpdated = serviceFromEntity(brandEntityUpdated);
+            brandUpdated = mapperService.serviceFromEntity(brandEntityUpdated);
         }
         return brandUpdated;
     }
 
     @Override
     public Brand delete(Integer id) {
-        Brand brand = brandRepository.findById(id).map(BrandServiceImpl::serviceFromEntity).orElse(null);
+        Brand brand = brandRepository.findById(id).map(mapperService::serviceFromEntity).orElse(null);
         if (brand != null) {
             brandRepository.deleteById(id);
         }
@@ -46,27 +49,7 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public Brand add(Brand brand) {
-        BrandEntity brandEntity = entityFromService(brand);
-        return serviceFromEntity(brandRepository.save(brandEntity));
-    }
-
-    private static Brand serviceFromEntity(BrandEntity brandEntity) {
-        Brand brand;
-        brand = new Brand(
-                brandEntity.getId(),
-                brandEntity.getName(),
-                brandEntity.getWarranty(),
-                brandEntity.getCountry()
-        );
-        return brand;
-    }
-
-    private static BrandEntity entityFromService(Brand brand) {
-        return new BrandEntity(
-                brand.getId(),
-                brand.getName(),
-                brand.getWarranty(),
-                brand.getCountry()
-        );
+        BrandEntity brandEntity = mapperService.entityFromService(brand);
+        return mapperService.serviceFromEntity(brandRepository.save(brandEntity));
     }
 }

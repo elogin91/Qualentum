@@ -1,6 +1,7 @@
 package com.calvarez.carregistry.controllers.dtos;
 
-public record CarResponse(Integer brand,
+public record CarResponse(Integer id,
+                          BrandResponse brand,
                           String model,
                           Integer milleage,
                           Double price,

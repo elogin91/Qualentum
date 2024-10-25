@@ -1,10 +1,16 @@
-package com.calvarez.carregistry.controllers.dtos;
+package com.calvarez.carregistry.services.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 
 @Data
-public class CarRequest {
-    private Integer brand;
+@AllArgsConstructor
+@NoArgsConstructor
+public class CarInput {
+    private Integer id;
+    private Integer brandId;
     private String model;
     private Integer milleage;
     private Double price;
