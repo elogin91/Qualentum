@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 @Service
@@ -19,8 +20,8 @@ public class BrandServiceImpl implements BrandService {
     private MapperService mapperService;
 
     @Override
-    public Brand get(Integer id) {
-        return brandRepository.findById(id).map(mapperService::serviceFromEntity).orElse(null);
+    public Optional<Brand> get(Integer id) {
+        return brandRepository.findById(id).map(mapperService::serviceFromEntity);
     }
 
     @Override
@@ -29,23 +30,23 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public Brand update(Brand brand) {
+    public Optional<Brand> update(Brand brand) {
         BrandEntity brandEntity = mapperService.entityFromService(brand);
         Brand brandUpdated = null;
         if (brandRepository.findById(brandEntity.getId()).isPresent()) {
             BrandEntity brandEntityUpdated = brandRepository.save(brandEntity);
             brandUpdated = mapperService.serviceFromEntity(brandEntityUpdated);
         }
-        return brandUpdated;
+        return Optional.ofNullable(brandUpdated);
     }
 
     @Override
-    public Brand delete(Integer id) {
+    public Optional<Brand> delete(Integer id) {
         Brand brand = brandRepository.findById(id).map(mapperService::serviceFromEntity).orElse(null);
         if (brand != null) {
             brandRepository.deleteById(id);
         }
-        return brand;
+        return Optional.ofNullable(brand);
     }
 
     @Override

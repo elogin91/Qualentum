@@ -2,21 +2,18 @@ package com.calvarez.carregistry.controllers;
 
 import com.calvarez.carregistry.controllers.dtos.BrandRequest;
 import com.calvarez.carregistry.controllers.dtos.BrandResponse;
-import com.calvarez.carregistry.services.BrandService;
 import com.calvarez.carregistry.services.model.Brand;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
+import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
 @RestController
 @Slf4j
 @RequestMapping("/brand")
-public class BrandController extends Controller{
+public class BrandController extends BaseController {
 
     @GetMapping("/")
     public ResponseEntity<?> getAllBrands() throws ExecutionException, InterruptedException {
@@ -26,9 +23,9 @@ public class BrandController extends Controller{
     @GetMapping("/{id}")
     public ResponseEntity<?> getBrand(@PathVariable Integer id) {
         try {
-            Brand brand = brandService.get(id);
-            if (brand != null) {
-                BrandResponse brandResponse = dtoFromService(brand);
+            Optional<Brand> brand = brandService.get(id);
+            if (brand.isPresent()) {
+                BrandResponse brandResponse = dtoFromService(brand.get());
                 return ResponseEntity.ok(brandResponse);
             } else {
                 return ResponseEntity.notFound().build();
@@ -43,12 +40,12 @@ public class BrandController extends Controller{
     public ResponseEntity<?> updateBrand(@PathVariable Integer id, @RequestBody BrandRequest brandRequest) {
         try {
             Brand brand = serviceFromDto(id, brandRequest);
-            Brand brandUpdated = brandService.update(brand);
-            if (brandUpdated == null) {
+            Optional<Brand> brandUpdated = brandService.update(brand);
+            if (brandUpdated.isEmpty()) {
                 return ResponseEntity.notFound().build();
             }
 
-            return ResponseEntity.ok(dtoFromService(brandUpdated));
+            return ResponseEntity.ok(dtoFromService(brandUpdated.get()));
         } catch (Exception e) {
             log.error("Something wrong updating a brand", e);
             return ResponseEntity.internalServerError().body("Some error has occurred, sorry");
@@ -58,9 +55,9 @@ public class BrandController extends Controller{
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteBrand(@PathVariable Integer id) {
         try {
-            Brand brand = brandService.delete(id);
-            if (brand != null) {
-                return ResponseEntity.ok(dtoFromService(brand));
+            Optional<Brand> brand = brandService.delete(id);
+            if (brand.isPresent()) {
+                return ResponseEntity.ok(dtoFromService(brand.get()));
             } else {
                 return ResponseEntity.notFound().build();
             }

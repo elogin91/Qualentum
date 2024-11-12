@@ -12,7 +12,7 @@ import com.calvarez.carregistry.services.model.Car;
 import com.calvarez.carregistry.services.model.CarInput;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public abstract class Controller {
+public abstract class BaseController {
 
     @Autowired
     protected CarService carService;

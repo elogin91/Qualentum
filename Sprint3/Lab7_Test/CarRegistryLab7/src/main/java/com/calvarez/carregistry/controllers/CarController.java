@@ -2,24 +2,20 @@ package com.calvarez.carregistry.controllers;
 
 import com.calvarez.carregistry.controllers.dtos.CarRequest;
 import com.calvarez.carregistry.controllers.dtos.CarResponse;
-import com.calvarez.carregistry.services.BrandService;
 import com.calvarez.carregistry.services.CarService;
-import com.calvarez.carregistry.services.Greetings;
 import com.calvarez.carregistry.services.model.Car;
 import com.calvarez.carregistry.services.model.CarInput;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 
 @RestController
 @Slf4j
 @RequestMapping("/car")
-public class CarController extends Controller{
+public class CarController extends BaseController {
 
     @GetMapping("/")
     public ResponseEntity<?> getGreetings() throws ExecutionException, InterruptedException {
