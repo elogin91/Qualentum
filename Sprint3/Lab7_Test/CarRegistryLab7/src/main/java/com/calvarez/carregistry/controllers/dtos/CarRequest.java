@@ -1,8 +1,10 @@
 package com.calvarez.carregistry.controllers.dtos;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class CarRequest {
     private Integer brand;
     private String model;

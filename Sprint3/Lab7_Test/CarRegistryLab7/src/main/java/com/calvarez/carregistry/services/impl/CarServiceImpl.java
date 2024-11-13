@@ -29,8 +29,8 @@ public class CarServiceImpl implements CarService {
 
 
     @Override
-    public Car get(Integer id) {
-        return carRepository.findById(id).map(mapperService::serviceFromEntity).orElse(null);
+    public Optional <Car> get(Integer id) {
+        return carRepository.findById(id).map(mapperService::serviceFromEntity);
     }
 
     @Override
@@ -39,21 +39,21 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public Car update(CarInput car) {
+    public Optional<Car> update(CarInput car) {
         Optional<BrandEntity> brand = brandRepository.findById(car.getBrandId());
-        Car carUpdated = null;
+        Optional<Car> carUpdated = Optional.empty();
         if (carRepository.findById(car.getId()).isPresent() && brand.isPresent()) {
             CarEntity carEntity = mapperService.entityFromService(car, brand.get());
             CarEntity carEntityUpdated = carRepository.save(carEntity);
-            carUpdated = mapperService.serviceFromEntity(carEntityUpdated);
+            carUpdated = Optional.of(mapperService.serviceFromEntity(carEntityUpdated));
         }
         return carUpdated;
     }
 
     @Override
-    public Car delete(Integer id) {
-        Car car = carRepository.findById(id).map(mapperService::serviceFromEntity).orElse(null);
-        if (car != null) {
+    public Optional <Car> delete(Integer id) {
+        Optional <Car> car = carRepository.findById(id).map(mapperService::serviceFromEntity);
+        if (car.isPresent()) {
             carRepository.deleteById(id);
         }
         return car;

@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
 
@@ -18,17 +19,16 @@ import java.util.concurrent.ExecutionException;
 public class CarController extends BaseController {
 
     @GetMapping("/")
-    public ResponseEntity<?> getGreetings() throws ExecutionException, InterruptedException {
-        System.out.println("Bienvenida desde el RESTCONTROLLER: " + greetings.hellow);
+    public ResponseEntity<?> getAllCars() throws ExecutionException, InterruptedException {
         return carService.getAll().thenApply(cars -> ResponseEntity.ok(cars.stream().map(this::dtoFromService))).get();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getCar(@PathVariable Integer id) {
         try {
-            Car car = carService.get(id);
-            if (car != null) {
-                CarResponse carResponse = dtoFromService(car);
+            Optional<Car> car = carService.get(id);
+            if (car.isPresent()) {
+                CarResponse carResponse = dtoFromService(car.get());
                 return ResponseEntity.ok(carResponse);
             } else {
                 return ResponseEntity.notFound().build();
@@ -43,12 +43,11 @@ public class CarController extends BaseController {
     public ResponseEntity<?> modifyCar(@PathVariable Integer id, @RequestBody CarRequest carRequest) {
         try {
             CarInput car = serviceFromDto(id, carRequest);
-            Car carUpdated = carService.update(car);
-            if (carUpdated == null) {
+            Optional <Car> carUpdated = carService.update(car);
+            if (carUpdated.isEmpty()) {
                 return ResponseEntity.notFound().build();
             }
-
-            return ResponseEntity.ok(dtoFromService(carUpdated));
+            return ResponseEntity.ok(dtoFromService(carUpdated.get()));
         } catch (Exception e) {
             log.error("Something wrong updating a car", e);
             return ResponseEntity.internalServerError().body("Some error has occurred, sorry");
@@ -58,9 +57,9 @@ public class CarController extends BaseController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteCar(@PathVariable Integer id) {
         try {
-            Car car = carService.delete(id);
-            if (car != null) {
-                CarResponse carResponse = dtoFromService(car);
+            Optional<Car> car = carService.delete(id);
+            if (car.isPresent()) {
+                CarResponse carResponse = dtoFromService(car.get());
                 return ResponseEntity.ok(carResponse);
             } else {
                 return ResponseEntity.notFound().build();

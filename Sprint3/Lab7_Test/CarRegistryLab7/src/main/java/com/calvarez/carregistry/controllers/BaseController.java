@@ -18,9 +18,6 @@ public abstract class BaseController {
     protected CarService carService;
 
     @Autowired
-    protected Greetings greetings;
-
-    @Autowired
     protected BrandService brandService;
 
     protected CarResponse dtoFromService(Car car) {
