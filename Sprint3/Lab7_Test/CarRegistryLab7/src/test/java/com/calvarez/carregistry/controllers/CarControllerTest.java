@@ -39,8 +39,7 @@ public class CarControllerTest {
     private static final int CAR_ID1 = 1;
     private static final int CAR_ID2 = 2;
     private static final int CAR_ID3 = 3;
-    private static final String USER_NAME = "username";
-    private static final String TOKEN = "token";
+
 
     @Autowired
     private MockMvc mockMvc;
