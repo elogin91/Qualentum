@@ -2,6 +2,7 @@ package com.calvarez.carregistry.controllers;
 
 
 import com.calvarez.carregistry.controllers.dtos.LoginRequest;
+import com.calvarez.carregistry.controllers.dtos.LoginResponse;
 import com.calvarez.carregistry.controllers.dtos.SingUpRequest;
 import com.calvarez.carregistry.services.impl.AuthenticationService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,7 @@ public class UserController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/signup")
-    public ResponseEntity<?> singup(@RequestBody SingUpRequest request) {
+    public ResponseEntity<LoginResponse> singup(@RequestBody SingUpRequest request) {
        try {
            return ResponseEntity.ok(authenticationService.signup(request));
        }
@@ -31,7 +32,7 @@ public class UserController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
         return ResponseEntity.ok(authenticationService.login(request));
     }
 }

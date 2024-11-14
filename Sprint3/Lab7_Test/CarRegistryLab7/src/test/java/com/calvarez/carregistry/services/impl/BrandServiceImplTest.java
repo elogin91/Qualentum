@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class BrandServiceImplTest {
+class BrandServiceImplTest {
     private static final int BRAND_ID1 = 1;
     private static final int BRAND_ID2 = 2;
     private static final int BRAND_ID3 = 3;
@@ -41,12 +41,10 @@ public class BrandServiceImplTest {
         Optional<Brand> result = brandService.get(BRAND_ID1);
 
        assertEquals(Optional.of(brand), result);
-//        assertEquals(new Brand(2, "asdf", 3, "asdf"), result);
     }
 
     @Test
     void getReturnsBrandWhenItDoesntExist(){
-        BrandEntity brandEntity = aBrandEntity();
         when(brandRepository.findById(BRAND_ID1)).thenReturn(Optional.empty());
 
         Optional<Brand> result = brandService.get(BRAND_ID1);
@@ -112,7 +110,6 @@ public class BrandServiceImplTest {
 
     @Test
     void deleteReturnsBrandWhenItDoesntExists(){
-        BrandEntity brandEntity = aBrandEntity();
         when(brandRepository.findById(BRAND_ID1)).thenReturn(Optional.empty());
 
         Optional<Brand> result = brandService.delete(BRAND_ID1);

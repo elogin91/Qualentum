@@ -1,15 +1,12 @@
 package com.calvarez.carregistry.controllers;
 
-import com.calvarez.carregistry.controllers.dtos.CarRequest;
-import com.calvarez.carregistry.repositories.entities.BrandEntity;
 import com.calvarez.carregistry.services.BrandService;
 import com.calvarez.carregistry.services.CarService;
 import com.calvarez.carregistry.services.impl.AuthenticationService;
 import com.calvarez.carregistry.services.impl.JwtService;
 import com.calvarez.carregistry.services.impl.UserServiceImpl;
 import com.calvarez.carregistry.services.model.Brand;
-import com.calvarez.carregistry.services.model.Car;
-import com.calvarez.carregistry.services.model.CarInput;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +28,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest
 @AutoConfigureMockMvc(addFilters = false)
-public class BrandControllerTest {
+ class BrandControllerTest {
     private static final int BRAND_ID1 = 1;
     private static final int BRAND_ID2 = 2;
-    private static final int BRAND_ID3 = 3;
 
     @Autowired
     private MockMvc mockMvc;
@@ -161,23 +157,15 @@ public class BrandControllerTest {
     }
 
 
-    private  Brand aBrand() {
+    private Brand aBrand() {
         return new Brand(BRAND_ID1, "Renault", 2, "Spain");
     }
-    private  Brand aBrand2() {
+
+    private Brand aBrand2() {
         return new Brand(BRAND_ID2, "Renault", 2, "Spain");
     }
-    private  Brand aBrandInputWithoutId() {
-        return new Brand(null, "Renault", 2, "Spain");
-    }
 
-    private static BrandEntity aBrandEntity() {
-        return new BrandEntity(BRAND_ID1, "Renault", 2, "Spain");
-    }
-    private static BrandEntity aBrandEntity2() {
-        return new BrandEntity(BRAND_ID2, "Renault", 2, "Spain");
-    }
-    private static BrandEntity aBrandEntity3() {
-        return new BrandEntity(BRAND_ID3, "Renault", 2, "Spain");
+    private Brand aBrandInputWithoutId() {
+        return new Brand(null, "Renault", 2, "Spain");
     }
 }

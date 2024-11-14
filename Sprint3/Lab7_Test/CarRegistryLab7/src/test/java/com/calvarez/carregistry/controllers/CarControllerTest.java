@@ -1,7 +1,6 @@
 package com.calvarez.carregistry.controllers;
 
 import com.calvarez.carregistry.controllers.dtos.CarRequest;
-import com.calvarez.carregistry.repositories.entities.UserEntity;
 import com.calvarez.carregistry.services.BrandService;
 import com.calvarez.carregistry.services.CarService;
 import com.calvarez.carregistry.services.impl.AuthenticationService;
@@ -25,21 +24,18 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.mockito.Mockito.mock;
+
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest
 @AutoConfigureMockMvc(addFilters = false)
-public class CarControllerTest {
+class CarControllerTest {
     private static final int BRAND_ID1 = 1;
     private static final int BRAND_ID2 = 2;
-    private static final int BRAND_ID3 = 3;
     private static final int CAR_ID1 = 1;
     private static final int CAR_ID2 = 2;
-    private static final int CAR_ID3 = 3;
-
 
     @Autowired
     private MockMvc mockMvc;
@@ -201,9 +197,6 @@ public class CarControllerTest {
     private Car aCar2() {
         return new Car(CAR_ID2, aBrand2(), "Clio", 209000, 10000.00, 2015, "Semi-nuevo", "Rojo", "Diesel", 5);
     }
-    private Car aCar3() {
-        return new Car(CAR_ID3, aBrand3(), "Clio", 209000, 10000.00, 2015, "Semi-nuevo", "Rojo", "Diesel", 5);
-    }
 
     private Brand aBrand() {
         return new Brand(BRAND_ID1, "Renault", 2, "Spain");
@@ -211,7 +204,5 @@ public class CarControllerTest {
     private Brand aBrand2() {
         return new Brand(BRAND_ID2, "Renault", 2, "Spain");
     }
-    private Brand aBrand3() {
-        return new Brand(BRAND_ID3, "Renault", 2, "Spain");
-    }
+
 }

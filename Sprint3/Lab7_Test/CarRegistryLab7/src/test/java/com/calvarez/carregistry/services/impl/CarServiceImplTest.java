@@ -10,7 +10,7 @@ import com.calvarez.carregistry.services.model.Car;
 import com.calvarez.carregistry.services.model.CarInput;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.api.function.Executable;
+
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -25,7 +25,7 @@ import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class CarServiceImplTest {
+class CarServiceImplTest {
     private static final int BRAND_ID1 = 1;
     private static final int BRAND_ID2 = 2;
     private static final int BRAND_ID3 = 3;

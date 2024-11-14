@@ -7,7 +7,6 @@ import com.calvarez.carregistry.repositories.entities.CarEntity;
 import com.calvarez.carregistry.services.CarService;
 import com.calvarez.carregistry.services.model.Car;
 import com.calvarez.carregistry.services.model.CarInput;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,15 +17,17 @@ import java.util.concurrent.CompletableFuture;
 @Service
 public class CarServiceImpl implements CarService {
 
-    @Autowired
-    private CarRepository carRepository;
+    private final CarRepository carRepository;
 
-    @Autowired
-    private BrandRepository brandRepository;
+    private final BrandRepository brandRepository;
 
-    @Autowired
-    private MapperService mapperService;
+    private final MapperService mapperService;
 
+    public CarServiceImpl(CarRepository carRepository, BrandRepository brandRepository, MapperService mapperService) {
+        this.carRepository = carRepository;
+        this.brandRepository = brandRepository;
+        this.mapperService = mapperService;
+    }
 
     @Override
     public Optional <Car> get(Integer id) {

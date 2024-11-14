@@ -7,7 +7,6 @@ import com.calvarez.carregistry.controllers.dtos.SingUpRequest;
 import com.calvarez.carregistry.repositories.UserRepository;
 import com.calvarez.carregistry.repositories.entities.UserEntity;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.BadRequestException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,7 +22,7 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public LoginResponse signup(SingUpRequest request) throws BadRequestException {
+    public LoginResponse signup(SingUpRequest request) {
         var user = UserEntity
                 .builder()
                 .name(request.getName())

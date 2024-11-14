@@ -4,7 +4,6 @@ import com.calvarez.carregistry.repositories.BrandRepository;
 import com.calvarez.carregistry.repositories.entities.BrandEntity;
 import com.calvarez.carregistry.services.BrandService;
 import com.calvarez.carregistry.services.model.Brand;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,12 +12,14 @@ import java.util.concurrent.CompletableFuture;
 
 @Service
 public class BrandServiceImpl implements BrandService {
-    @Autowired
-    private BrandRepository brandRepository;
 
-    @Autowired
-    private MapperService mapperService;
+    private final BrandRepository brandRepository;
+    private final MapperService mapperService;
 
+    public BrandServiceImpl(BrandRepository brandRepository,MapperService mapperService) {
+        this.brandRepository=brandRepository;
+        this.mapperService=mapperService;
+    }
     @Override
     public Optional<Brand> get(Integer id) {
         return brandRepository.findById(id).map(mapperService::serviceFromEntity);

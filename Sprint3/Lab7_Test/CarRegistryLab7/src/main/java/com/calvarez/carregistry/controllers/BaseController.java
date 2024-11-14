@@ -6,19 +6,22 @@ import com.calvarez.carregistry.controllers.dtos.CarRequest;
 import com.calvarez.carregistry.controllers.dtos.CarResponse;
 import com.calvarez.carregistry.services.BrandService;
 import com.calvarez.carregistry.services.CarService;
-import com.calvarez.carregistry.services.Greetings;
+
 import com.calvarez.carregistry.services.model.Brand;
 import com.calvarez.carregistry.services.model.Car;
 import com.calvarez.carregistry.services.model.CarInput;
-import org.springframework.beans.factory.annotation.Autowired;
+
 
 public abstract class BaseController {
 
-    @Autowired
+    protected static final String ERROR_MESSAGE = "Some error has occurred, sorry";
     protected CarService carService;
-
-    @Autowired
     protected BrandService brandService;
+
+    protected BaseController(CarService carService, BrandService brandService) {
+        this.carService = carService;
+        this.brandService = brandService;
+    }
 
     protected CarResponse dtoFromService(Car car) {
         return new CarResponse(
@@ -36,7 +39,7 @@ public abstract class BaseController {
     }
 
     protected CarInput serviceFromDto(Integer id, CarRequest carRequest) {
-        CarInput car = new CarInput(
+        return new CarInput(
                 id,
                 carRequest.getBrand(),
                 carRequest.getModel(),
@@ -48,7 +51,6 @@ public abstract class BaseController {
                 carRequest.getFuelType(),
                 carRequest.getNumDoors()
         );
-        return car;
     }
     protected BrandResponse dtoFromService(Brand brand) {
         return new BrandResponse(

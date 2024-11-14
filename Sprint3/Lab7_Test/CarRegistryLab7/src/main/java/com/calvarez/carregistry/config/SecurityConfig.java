@@ -30,6 +30,10 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final UserServiceImpl userService;
     private final PasswordEncoder passwordEncoder;
+    private static final String CAR_ENDPOINT ="/car/**";
+    private static final String BRAND_ENDPOINT ="/brand/**";
+    private static final String ADMIN_ROLE ="ROLE_VENDOR";
+
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
@@ -53,14 +57,14 @@ public class SecurityConfig {
         .authorizeHttpRequests( authorize -> authorize
                 .requestMatchers(HttpMethod.POST, "/user/**","/user/login", "*/signup").permitAll()
                 .requestMatchers(HttpMethod.GET, "/test/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/car/**").hasAnyAuthority("ROLE_CLIENT","ROLE_VENDOR")
-                .requestMatchers(HttpMethod.POST, "/car/**").hasAnyAuthority("ROLE_VENDOR")
-                .requestMatchers(HttpMethod.PUT, "/car/**").hasAnyAuthority("ROLE_VENDOR")
-                .requestMatchers(HttpMethod.DELETE, "/car/**").hasAnyAuthority("ROLE_VENDOR")
-                .requestMatchers(HttpMethod.GET, "/brand/**").hasAnyAuthority("ROLE_CLIENT","ROLE_VENDOR")
-                .requestMatchers(HttpMethod.POST, "/brand/**").hasAnyAuthority("ROLE_VENDOR")
-                .requestMatchers(HttpMethod.PUT, "/brand/**").hasAnyAuthority("ROLE_VENDOR")
-                .requestMatchers(HttpMethod.DELETE, "/brand/**").hasAnyAuthority("ROLE_VENDOR")
+                .requestMatchers(HttpMethod.GET, CAR_ENDPOINT).hasAnyAuthority("ROLE_CLIENT", ADMIN_ROLE)
+                .requestMatchers(HttpMethod.POST, CAR_ENDPOINT).hasAnyAuthority(ADMIN_ROLE)
+                .requestMatchers(HttpMethod.PUT, CAR_ENDPOINT).hasAnyAuthority(ADMIN_ROLE)
+                .requestMatchers(HttpMethod.DELETE, CAR_ENDPOINT).hasAnyAuthority(ADMIN_ROLE)
+                .requestMatchers(HttpMethod.GET, BRAND_ENDPOINT).hasAnyAuthority("ROLE_CLIENT", ADMIN_ROLE)
+                .requestMatchers(HttpMethod.POST, BRAND_ENDPOINT).hasAnyAuthority(ADMIN_ROLE)
+                .requestMatchers(HttpMethod.PUT, BRAND_ENDPOINT).hasAnyAuthority(ADMIN_ROLE)
+                .requestMatchers(HttpMethod.DELETE, BRAND_ENDPOINT).hasAnyAuthority(ADMIN_ROLE)
                 .anyRequest().authenticated())
         .authenticationProvider(authenticationProvider()).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
