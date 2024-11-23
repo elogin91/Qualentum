@@ -1,0 +1,19 @@
+
+services:
+  db:
+    image: mysql
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: empty
+      MYSQL_DATABASE: car_registry
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - "./mysql/:/docker-entrypoint-initdb.d/"
+
+volumes:
+  db_data:
