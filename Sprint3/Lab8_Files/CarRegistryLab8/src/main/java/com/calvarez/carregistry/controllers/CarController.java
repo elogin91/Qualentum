@@ -7,9 +7,16 @@ import com.calvarez.carregistry.services.CarService;
 import com.calvarez.carregistry.services.model.Car;
 import com.calvarez.carregistry.services.model.CarInput;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Stream;
@@ -88,5 +95,32 @@ public class CarController extends BaseController {
             log.error("Something wrong adding a car", e);
             return ResponseEntity.internalServerError().body(e.getMessage());
         }
+    }
+    @PostMapping("/importAll")
+    public ResponseEntity<String> importAllCars(@RequestParam(value="file") MultipartFile file) {
+        if (file.isEmpty()) {
+            log.error("File is empty");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        if(file.getOriginalFilename() == null || !file.getOriginalFilename().endsWith(".csv")) {
+            log.error("File type is invalid");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        if(carService.importCAr(file) != null) {
+            return ResponseEntity.ok("Coches añadidos correctamente");
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+
+    @GetMapping("/exportAll")
+    public ResponseEntity<Object> exportAllCars() {
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDispositionFormData("attachment", "car.csv");
+
+        byte[] csvBytes = carService.allCarsCsv().getBytes();
+
+        return new ResponseEntity<>(csvBytes, headers, HttpStatus.OK);
     }
 }

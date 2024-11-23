@@ -3,6 +3,7 @@ package com.calvarez.carregistry.services;
 import com.calvarez.carregistry.services.model.Car;
 import com.calvarez.carregistry.services.model.CarInput;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +16,8 @@ public interface CarService {
     Optional<Car> update(CarInput item);
     Optional<Car> delete(Integer id);
     Car add(CarInput item) throws BrandNotFoundException;
+    List<Car> importCAr(MultipartFile multipartFile);
+    String allCarsCsv();
 
     class BrandNotFoundException extends Exception {
         public BrandNotFoundException() {

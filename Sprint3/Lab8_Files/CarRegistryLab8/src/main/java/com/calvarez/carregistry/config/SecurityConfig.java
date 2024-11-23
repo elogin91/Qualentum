@@ -55,7 +55,7 @@ public class SecurityConfig {
         .csrf(AbstractHttpConfigurer::disable)
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests( authorize -> authorize
-                .requestMatchers(HttpMethod.POST, "/user/**","/userImage/**","/user/login", "*/signup").permitAll()
+                .requestMatchers(HttpMethod.POST, "/user/**","/userImage/**","/user/login", "*/signup", "/car/importAll").permitAll()
                 .requestMatchers(HttpMethod.GET, "/userImage/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/test/**").permitAll()
                 .requestMatchers(HttpMethod.GET, CAR_ENDPOINT).hasAnyAuthority("ROLE_CLIENT", ADMIN_ROLE)
